@@ -6,7 +6,7 @@
 
 ## ⚠️ known issues
 
-- The bitwise values for Discord badges have not been implemented yet. This feature will be added in a future update.
+- Some badges cannot be retrieved yet because the bitwise values for these badges have not been implemented.
 
 ---
 
