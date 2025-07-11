@@ -28,7 +28,9 @@ BOT_TOKEN="MT52MDAzOD2C1OD24y........"
 ```bash
 npm install
 npm run dev
+
 npm run build
+npm run start
 ```
 
 then open [http://localhost:3000](http://localhost:3000)
