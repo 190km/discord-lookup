@@ -76,7 +76,7 @@ export default async function Page({ params }: Props) {
   const isUserFound = !!user;
 
   return (
-    <div className=" min-h-screen bg-gradient-to-br from-[#1e1f22] via-[#2b2d31] to-[#1e1f22] flex items-center justify-center p-1 relative">
+    <>
       {isUserFound ? (
         <UserCard
           userId={user.id}
@@ -120,6 +120,6 @@ export default async function Page({ params }: Props) {
           nameplateName="404"
         />
       )}
-    </div>
+    </>
   );
 }

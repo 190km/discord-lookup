@@ -71,15 +71,17 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <script
-          src="https://stats.jeong.fr/api/script.js"
-          data-site-id="3"
           defer
-        />
+          src="https://stats.jeong.fr/script.js"
+          data-website-id="63dd69f8-3dde-41b5-9142-def5a3a02972"
+        ></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${serif.variable} ${inter.variable} antialiased`}
       >
-        {children}
+        <div className=" min-h-screen bg-gradient-to-br from-[#1e1f22] via-[#2b2d31] to-[#1e1f22] flex items-center justify-center p-1 relative">
+          {children}
+        </div>
       </body>
     </html>
   );

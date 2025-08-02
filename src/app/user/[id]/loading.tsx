@@ -7,7 +7,7 @@ import { RotateCcw } from "lucide-react";
 
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1e1f22] via-[#2b2d31] to-[#1e1f22] flex items-center justify-center p-1 relative">
+    <>
       <div className="m-2 pt-8 flex justify-center items-center flex-col w-full max-w-xl">
         <div className="rounded-lg h-auto bg-zinc-800 w-full">
           <Skeleton className="w-full aspect-[4/1] relative rounded-t-lg rounded-b-none overflow-hidden select-none" />
@@ -62,6 +62,6 @@ export default function Loading() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
