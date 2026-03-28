@@ -1,6 +1,10 @@
+import { cache } from "react";
 import UserCard from "@/components/discord/user-card";
-import { getUser } from "@/lib/fetch-user";
+import NotFound from "@/components/discord/not-found";
+import { getUser as fetchUser } from "@/lib/fetch-user";
 import { Metadata } from "next";
+
+const getUser = cache(fetchUser);
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -103,22 +107,7 @@ export default async function Page({ params }: Props) {
           nameplateName={user.collectibles.nameplate.label}
         />
       ) : (
-        <UserCard
-          discriminator="0"
-          isBot={false}
-          isVerified={false}
-          userId="000000000000000000"
-          username="Unknown User"
-          globalName="Unknown User"
-          avatarUrl="https://cdn.discordapp.com/embed/avatars/0.png"
-          avatarDecoration={undefined}
-          badges={[]}
-          banner={{
-            url: undefined,
-            color: "#2f3136",
-          }}
-          nameplateName="404"
-        />
+        <NotFound id={id} />
       )}
     </>
   );
