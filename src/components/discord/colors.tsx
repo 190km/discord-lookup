@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 type Props = {
   primary?: string;
@@ -8,8 +8,12 @@ type Props = {
 };
 
 export default function Colors({ primary, accent }: Props) {
+  const [copiedColor, setCopiedColor] = useState<string | null>(null);
+
   const copyToClipboard = (color: string) => {
     navigator.clipboard.writeText(color);
+    setCopiedColor(color);
+    setTimeout(() => setCopiedColor(null), 2000);
   };
 
   return (
@@ -26,7 +30,7 @@ export default function Colors({ primary, accent }: Props) {
                 onClick={() => copyToClipboard(primary)}
                 className="cursor-pointer hover:opacity-80 flex items-center gap-x-1 border-[1px] border-[#303037] pl-1 bg-zinc-700/50 rounded-sm "
               >
-                {primary}
+                {copiedColor === primary ? "Copied!" : primary}
                 <div
                   style={{ backgroundColor: primary }}
                   className="size-5 rounded"
@@ -40,7 +44,7 @@ export default function Colors({ primary, accent }: Props) {
                   onClick={() => copyToClipboard(accent)}
                   className="cursor-pointer hover:opacity-80 flex items-center gap-x-1 border-[1px] border-[#303037] pl-1 bg-zinc-700/50 rounded-sm "
                 >
-                  {accent}
+                  {copiedColor === accent ? "Copied!" : accent}
                   <div
                     style={{ backgroundColor: accent }}
                     className="size-5 rounded"

@@ -27,6 +27,7 @@ export default function Badges({ badges }: Props) {
               alt={badge.name || "badge"}
               width={32}
               height={32}
+              loading="eager"
               className="size-6 h-auto cursor-pointer"
             />
           </TooltipTrigger>

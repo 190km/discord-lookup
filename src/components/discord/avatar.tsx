@@ -23,6 +23,7 @@ export default function Avatar({ url, decoration }: AvatarProps) {
             alt="Avatar decoration"
             width={112}
             height={112}
+            loading="eager"
             className="absolute -top-15.5 -left-[5.1px] size-[122px] z-30"
           />
         )}
@@ -33,6 +34,7 @@ export default function Avatar({ url, decoration }: AvatarProps) {
           alt="Profile picture"
           width={112}
           height={112}
+          loading="eager"
           className="absolute -top-14 rounded-full border-4 border-zinc-800 w-28 h-28 bg-zinc-900"
         />
       </Link>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Tag from "./tag";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import Image from "next/image";
@@ -28,6 +28,14 @@ export default function Infos({
   isVerified,
   discriminator,
 }: InfosProps) {
+  const [copied, setCopied] = useState(false);
+
+  const copyUserId = () => {
+    navigator.clipboard.writeText(userId);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="bg-zinc-900 p-3 pb-0 mt-16 mx-3 rounded-t-lg max-h-[400px] z-50">
       <div className="flex items-center gap-x-1">
@@ -52,7 +60,11 @@ export default function Infos({
                 />
               </TooltipTrigger>
               <TooltipContent>
-                <p>{BADGES.flairs.bot_app.name}</p>
+                <p>
+                  {isVerified
+                    ? BADGES.flairs.verified_bot_app.name
+                    : BADGES.flairs.bot_app.name}
+                </p>
               </TooltipContent>
             </Tooltip>
             
@@ -66,7 +78,13 @@ export default function Infos({
         {discriminator !== "0" && `#${discriminator}`}
       </h6>
       <div className="pb-3 flex">
-        <p className="text-xs text-white">{userId}</p>
+        <p
+          onClick={copyUserId}
+          className="text-xs text-white cursor-pointer hover:opacity-80 transition-opacity"
+          title="Click to copy"
+        >
+          {copied ? "Copied!" : userId}
+        </p>
       </div>
       <hr className="h-px bg-zinc-600 border-0 w-full" />
     </div>

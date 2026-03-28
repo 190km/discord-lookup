@@ -19,13 +19,14 @@ export default function Banner({ color, url }: BannerProps) {
       }}
     >
       {hasImage && (
-        <Link target="_blank" href={url!}>
+        <Link target="_blank" href={url!} className="relative block w-full h-full">
           <Image
             unoptimized
             draggable={false}
             src={url!}
             alt="banner background"
             fill
+            loading="eager"
             className="object-cover"
             sizes="(max-width: 800px) 100vw, 800px"
           />

@@ -66,7 +66,7 @@ export default function UserCard({
   nameplateName,
 }: UserCardProps) {
   return (
-    <div className="m-2 pt-8 flex justify-center items-center flex-col w-full max-w-xl">
+    <div className="px-2 pt-8 flex justify-center items-center flex-col w-full max-w-xl animate-in fade-in-0 duration-500">
       <div className="rounded-lg h-auto bg-zinc-800 w-full">
         <Banner url={banner.url} color={banner.color} />
         <div className="relative mx-3">
