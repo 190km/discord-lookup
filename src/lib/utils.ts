@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export function intToHexColor(
   num: number | null | undefined | ""
 ): string | null {
-  if (num === null || num === undefined || num === "" || num === 0) {
+  if (num === null || num === undefined || num === "") {
     return null;
   }
   if (typeof num !== "number" || num < 0 || num > 0xffffff) {

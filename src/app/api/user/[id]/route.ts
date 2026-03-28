@@ -9,11 +9,54 @@ import {
 import { Badge, BADGES } from "@/lib/badges";
 import { intToHexColor } from "@/lib/utils";
 
+const cache = new Map<string, { data: unknown; expires: number }>();
+const CACHE_TTL = 60_000; // 60 seconds
+
+const ALLOWED_ORIGINS = [
+  process.env.NEXT_PUBLIC_APP_URL,
+  "http://localhost:3000",
+].filter(Boolean) as string[];
+
+function corsHeaders(origin: string | null) {
+  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allowed,
+    "Access-Control-Allow-Methods": "GET",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
+
+export async function OPTIONS(request: Request) {
+  const origin = request.headers.get("origin");
+  return new NextResponse(null, { status: 204, headers: corsHeaders(origin) });
+}
+
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
+  const origin = request.headers.get("origin");
   const { id } = await context.params;
+
+  if (!/^\d{17,20}$/.test(id)) {
+    return NextResponse.json(
+      { message: "Invalid Discord user ID format" },
+      { status: 400, headers: corsHeaders(origin) }
+    );
+  }
+
+  if (!process.env.BOT_TOKEN) {
+    return NextResponse.json(
+      { error: "Bot token is not configured" },
+      { status: 503, headers: corsHeaders(origin) }
+    );
+  }
+
+  // Check cache
+  const cached = cache.get(id);
+  if (cached && Date.now() < cached.expires) {
+    return NextResponse.json(cached.data, { headers: corsHeaders(origin) });
+  }
 
   try {
     const response = await fetch(`https://discord.com/api/v10/users/${id}`, {
@@ -25,8 +68,8 @@ export async function GET(
 
     const json = await response.json();
 
-    if (json.message) {
-      return NextResponse.json(json);
+    if (!response.ok) {
+      return NextResponse.json(json, { status: response.status, headers: corsHeaders(origin) });
     }
 
     const userBadges: Badge[] = [];
@@ -45,6 +88,10 @@ export async function GET(
     const isAvatarAnimated = json.avatar?.startsWith("a_") ?? false;
     const isBannerAnimated = json.banner?.startsWith("a_") ?? false;
 
+    if (json.premium_type && json.premium_type > 0) {
+      userBadges.push(BADGES.general.discordnitro);
+    }
+
     const output = {
       id: json.id,
       discriminator: json.discriminator,
@@ -61,7 +108,7 @@ export async function GET(
       banner: {
         id: json.banner,
         link: json.banner
-          ? `https://cdn.discordapp.com/banners/${json.id}/${json.banner}?size=480`
+          ? `https://cdn.discordapp.com/banners/${json.id}/${json.banner}${isBannerAnimated ? ".gif" : ".webp"}?size=1024`
           : null,
         animated: isBannerAnimated,
         color: json.banner_color,
@@ -97,16 +144,25 @@ export async function GET(
           ? getUserGuildTagUrl(json.clan.identity_guild_id, json.clan.badge)
           : null,
       },
-
-      raw: json,
     };
 
-    return NextResponse.json(output);
+    // Cache the result
+    cache.set(id, { data: output, expires: Date.now() + CACHE_TTL });
+
+    // Evict expired entries periodically
+    if (cache.size > 1000) {
+      const now = Date.now();
+      for (const [key, val] of cache) {
+        if (now >= val.expires) cache.delete(key);
+      }
+    }
+
+    return NextResponse.json(output, { headers: corsHeaders(origin) });
   } catch (err) {
     console.error(err);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500, headers: corsHeaders(origin) }
     );
   }
 }

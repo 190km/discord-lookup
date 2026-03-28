@@ -29,7 +29,7 @@ type User = {
   discriminator: string;
   avatar: {
     link: string;
-    animted: boolean;
+    animated: boolean;
   };
   guild: {
     tagname: string;
@@ -63,7 +63,7 @@ export async function getUser(id: string): Promise<User | null> {
       discriminator: data.discriminator,
       avatar: {
         link: data.avatar.link,
-        animted: data.avatar.animted,
+        animated: data.avatar.animated,
       },
       badges: data.badges,
       collectibles: data.collectibles,

@@ -15,6 +15,6 @@ export function snowflakeToDate(id: string): Date {
 }
 
 export function checkValidSnowflake(id: string): string {
-  if (/^\d{17,20}$/.test(id)) return id;
+  if (/^\d{17,20}$/.test(id.trim())) return id.trim();
   else return "Invalid Discord ID";
 }
