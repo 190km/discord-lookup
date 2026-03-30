@@ -69,13 +69,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script
-          defer
-          src="https://stats.jeong.fr/script.js"
-          data-website-id="63dd69f8-3dde-41b5-9142-def5a3a02972"
-        ></script>
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${serif.variable} ${inter.variable} antialiased`}
       >

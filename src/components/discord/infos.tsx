@@ -78,13 +78,14 @@ export default function Infos({
         {discriminator !== "0" && `#${discriminator}`}
       </h6>
       <div className="pb-3 flex">
-        <p
+        <button
+          type="button"
           onClick={copyUserId}
-          className="text-xs text-white cursor-pointer hover:opacity-80 transition-opacity"
-          title="Click to copy"
+          className="text-xs text-white cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none p-0 font-inherit"
+          aria-label={`Copy user ID ${userId}`}
         >
           {copied ? "Copied!" : userId}
-        </p>
+        </button>
       </div>
       <hr className="h-px bg-zinc-600 border-0 w-full" />
     </div>

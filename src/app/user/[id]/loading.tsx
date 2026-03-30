@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (
-    <div className="px-2 pt-8 flex justify-center items-center flex-col w-full max-w-xl animate-in fade-in-0 duration-300">
+    <div role="status" aria-label="Loading user profile" className="px-2 pt-8 flex justify-center items-center flex-col w-full max-w-xl animate-in fade-in-0 duration-300">
       <div className="rounded-lg h-auto bg-zinc-800 w-full">
         {/* Banner skeleton */}
         <Skeleton className="w-full aspect-[4/1] rounded-t-lg rounded-b-none bg-zinc-700" />

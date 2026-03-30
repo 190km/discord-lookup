@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import Link from "next/link";
@@ -21,7 +20,7 @@ export default function Nameplate({ url, name }: NameplateProps) {
           </p>
           {/* <p className="tracking-wide text-[13px] text-white">Label: {name}</p> */}
 
-          <Link href={url!} target="_blank">
+          <Link href={url!} target="_blank" aria-label={name ? `View ${name} nameplate` : "View nameplate"}>
             <div className="mt-0.5 flex flex-col pb-3">
               <video
                 src={url!}
@@ -29,6 +28,7 @@ export default function Nameplate({ url, name }: NameplateProps) {
                 loop
                 muted
                 playsInline
+                aria-label={name || "Nameplate animation"}
                 className="w-full mt-2 rounded-lg border-[1px] border-[#303037]"
               />
             </div>
