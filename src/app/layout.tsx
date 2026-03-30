@@ -31,20 +31,17 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   alternates: {
-    canonical: siteConfig.url,
-    languages: {
-      en: siteConfig.url,
-    },
+    canonical: "/",
   },
   openGraph: {
     type: "website",
-    url: siteConfig.url,
+    url: "/",
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
     images: [
       {
-        url: siteConfig.ogImage,
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: siteConfig.name,
@@ -55,10 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: siteConfig.ogImage,
-  },
-  other: {
-    lastModified: new Date().toISOString(),
+    images: "/og-image.png",
   },
 };
 

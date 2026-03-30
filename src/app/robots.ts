@@ -1,7 +1,5 @@
 import { siteConfig } from "@/config/site";
 
-const baseUrl = siteConfig.url;
-
 export default function robots() {
   return {
     rules: [
@@ -10,7 +8,7 @@ export default function robots() {
         allow: "/",
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
+    sitemap: `${siteConfig.url}/sitemap.xml`,
+    host: siteConfig.url,
   };
 }

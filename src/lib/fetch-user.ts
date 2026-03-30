@@ -1,4 +1,3 @@
-import { siteConfig } from "@/config/site";
 import { Badge } from "./badges";
 
 export type Collectible = {
@@ -43,7 +42,10 @@ type User = {
 
 export async function getUser(id: string): Promise<User | null> {
   try {
-    const baseUrl = typeof window !== "undefined" ? "" : siteConfig.url;
+    const baseUrl =
+      typeof window !== "undefined"
+        ? ""
+        : process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const res = await fetch(`${baseUrl}/api/user/${id}`, {
       cache: "no-store",
     });
