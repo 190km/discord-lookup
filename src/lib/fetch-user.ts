@@ -43,7 +43,8 @@ type User = {
 
 export async function getUser(id: string): Promise<User | null> {
   try {
-    const res = await fetch(`${siteConfig.url}/api/user/${id}`, {
+    const baseUrl = typeof window !== "undefined" ? "" : siteConfig.url;
+    const res = await fetch(`${baseUrl}/api/user/${id}`, {
       cache: "no-store",
     });
 
